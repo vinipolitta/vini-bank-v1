@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CampoErro } from '../../shared/campo-erro/campo-erro';
+import { Transacao, TipoTransacao } from '../../models/transacao-model';
 
 @Component({
   selector: 'app-form-nova-transacao',
@@ -11,6 +12,7 @@ import { CampoErro } from '../../shared/campo-erro/campo-erro';
 export class FormNovaTransacao implements OnInit {
   valorTransacao = "";
   formNovaTransacao!: FormGroup;
+  transacaoCriada = output<Transacao>()
 
   constructor(private fb: FormBuilder) { }
 
@@ -30,12 +32,19 @@ export class FormNovaTransacao implements OnInit {
       this.marcarTodosComoTocados(this.formNovaTransacao);
       return;
     }
-    console.log(this.formNovaTransacao.value);
+
+    const transacao = new Transacao(
+      this.formNovaTransacao.value.tipoTransacao as TipoTransacao,
+      Number(this.formNovaTransacao.value.valorTransacao)
+    );
+    console.log(transacao);
+    this.transacaoCriada.emit(transacao);
 
     this.formNovaTransacao.reset({
       tipoTransacao: '',
       valorTransacao: ''
     });
+
   }
 
   private marcarTodosComoTocados(formGroup: FormGroup | FormArray) {
