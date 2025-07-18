@@ -9,9 +9,10 @@
                     <select formControlName="tipoTransacao" name="tipo-transacao" class="campo select-tipo-transacao"
                         required>
                         <option value="" selected disabled>Selecione o tipo de transação</option>
-                        <option value="deposito">Depósito</option>
-                        <option value="saque">Saque</option>
-                        <option value="transferencia">Transferência</option>
+
+                        @for (tipo of tipoTransacaoEnum | keyvalue; track tipo.key) {
+                        <option [value]="tipo.value">{{tipo.value}}</option>
+                        }
                     </select>
                     <app-campo-erro [control]="formNovaTransacao.get('tipoTransacao')"
                         fieldName="Tipo de transação"></app-campo-erro>
@@ -20,13 +21,13 @@
             <label class="campo-grupo">
                 Valor
                 <div class="input-wrapper">
-                    <input formControlName="valorTransacao" placeholder="R$ 0,00" type="number" min="0.01" step="0.01"
+                    <input formControlName="valorTransacao" placeholder="0,00" type="number" min="0.01" step="0.01"
                         name="valor" class="campo input-valor-transacao" required>
                     <app-campo-erro [control]="formNovaTransacao.get('valorTransacao')"
                         fieldName="Valor"></app-campo-erro>
                 </div>
             </label>
-            <button class="botao-confirmar-transacao" >Confirmar
+            <button class="botao-confirmar-transacao">Confirmar
                 transação</button>
         </div>
     </form>

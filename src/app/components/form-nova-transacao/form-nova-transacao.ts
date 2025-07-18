@@ -2,10 +2,11 @@ import { Component, OnInit, output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CampoErro } from '../../shared/campo-erro/campo-erro';
 import { Transacao, TipoTransacao } from '../../models/transacao-model';
+import { KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: 'app-form-nova-transacao',
-  imports: [FormsModule, ReactiveFormsModule, CampoErro],
+  imports: [FormsModule, ReactiveFormsModule, CampoErro, KeyValuePipe],
   templateUrl: './form-nova-transacao.html',
   styleUrl: './form-nova-transacao.css'
 })
@@ -13,6 +14,8 @@ export class FormNovaTransacao implements OnInit {
   valorTransacao = "";
   formNovaTransacao!: FormGroup;
   transacaoCriada = output<Transacao>()
+
+  tipoTransacaoEnum = TipoTransacao;
 
   constructor(private fb: FormBuilder) { }
 
